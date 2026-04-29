@@ -59,3 +59,67 @@ Além de texto, o Vertex AI Studio conta com ferramentas para criação de outro
 - **Imagen:** Ferramenta para gerar imagens realistas a partir de descrições em texto. Conta com recursos de edição avançada, como Inpaint (alterar partes específicas) e Outpaint (expandir as bordas da imagem).
 - **SynthID:** Tecnologia do Google DeepMind que insere uma marca-d'água digital invisível nas imagens geradas por IA, garantindo a rastreabilidade e transparência, mesmo que a imagem sofra edições.
 - **Chirp (Text-to-Speech):** Ferramenta para gerar vozes realistas (IA de voz) a partir de textos, permitindo selecionar diferentes modelos, idiomas e locutores.
+
+---
+
+## Laboratório 3: Introdução à IA generativa do Google usando o SDK da IA generativa
+
+### 1. Interação Básica com o Modelo
+A interação com a API do Gemini permite o envio de diferentes tipos de informações para gerar respostas dinâmicas:
+- **Comandos de Texto:** Uso do método generate_content para receber respostas em formato de texto.
+- **Comandos Multimodais:** O SDK aceita prompts combinados contendo textos, PDFs, imagens, áudios e vídeos (inclusive arquivos passados diretamente via URL/URI).
+- **Instruções do Sistema:** Definição prévia do comportamento e da "personalidade" do modelo para que as respostas sigam regras ou formatos estritos.
+
+### 2. Configuração e Controle
+O SDK oferece ferramentas para garantir que as saídas da IA sejam seguras, úteis e formatadas corretamente:
+- **Parâmetros do Modelo:** Ajustes finos (como temperatura) para controlar a criatividade e o foco da resposta.
+- **Filtros de Segurança:** Ajuste das categorias de segurança da API para bloquear a geração de conteúdos indesejados ou nocivos.
+- **Saída Controlada:** Permite forçar o modelo a gerar respostas em formatos de dados rigorosos, como JSON ou esquemas baseados em Pydantic/dicionários Python. Útil para extração estruturada de dados de texto.
+- **Conversa Multiturno:** Capacidade de criar interações contínuas (chat), onde o modelo lembra do contexto das mensagens anteriores.
+
+### 3. Gerenciamento de Interações e Desempenho
+Para aplicações em produção, o laboratório destaca métodos de otimização de tempo e recursos:
+- **Streaming de Conteúdo:** Uso de generate_content_stream para exibir a resposta em tempo real, pedaço por pedaço, em vez de aguardar o processamento completo.
+- **Solicitações Assíncronas:** Execução de chamadas à API sem bloquear o restante do código da aplicação, usando o módulo client.aio.
+- **Contagem de Tokens:** Ferramentas para calcular o tamanho da entrada antes do envio, ajudando no controle de custos e limites técnicos.
+
+### 4. Recursos Avançados
+A última etapa foca em técnicas de arquitetura para uso em larga escala da IA:
+- **Chamadas de Função (Function Calling):** Permite descrever ferramentas e funções do seu próprio código para o modelo. A IA decide quando "chamar" essas funções e com quais argumentos, automatizando ações.
+- **Armazenamento em Cache de Contexto:** Salva em cache grandes blocos de contexto (tokens) que são usados repetidamente, reduzindo custos e acelerando as respostas.
+- **Predições em Lote (Batch Prediction):** Envio de milhares de solicitações de uma só vez através de arquivos (JSONL) via Cloud Storage ou BigQuery. É um processamento assíncrono muito mais barato e eficiente do que fazer chamadas individuais em tempo real.
+- **Embeddings de Texto:** Capacidade de converter textos em representações vetoriais/numéricas (geralmente com 768 dimensões) para uso em sistemas de busca e comparação de similaridade.
+
+---
+
+## Laboratório 4: Criação de comandos na Vertex AI: laboratório com desafio
+
+### O Cenário Prático
+O usuário assume o papel de um profissional em uma startup parceira da Cymbal Direct, uma varejista de equipamentos para atividades ao ar livre. O objetivo é usar o Vertex AI Studio e os modelos Gemini para automatizar a criação de materiais para uma campanha de marketing voltada para a natureza, dividida em duas frentes:
+- Descrições de produtos baseadas em imagens.
+- Slogans chamativos e personalizados.
+
+### Tarefa 1: Ferramenta de Análise de Imagens (Multimodal)
+O objetivo desta etapa é usar a capacidade multimodal do Gemini para analisar imagens de produtos e gerar textos de marketing.
+- **Ação:** Criar um comando no Vertex AI Studio fornecendo uma imagem armazenada no Cloud Storage.
+- **Testes:** O comando deve ser testado para gerar diferentes saídas, como descrições curtas, frases para anúncios ou textos poéticos focados na natureza.
+- **Conclusão:** O comando deve ser salvo com o nome específico "Análise de produtos da Cymbal".
+
+### Tarefa 2: Gerador de Slogans (Few-Shot Prompting)
+Esta tarefa foca em criar um gerador de textos padronizado e controlável usando exemplos.
+- **Instruções do Sistema:** É necessário definir o papel da IA, informando sobre a parceria com a Cymbal Direct e o foco em incentivar jovens a explorar a natureza.
+- **Exemplos (Few-Shot):** O usuário deve inserir pelo menos dois exemplos (Entrada vs. Saída) para guiar o estilo do modelo (ex: Entrada detalhando uma mochila durável -> Saída: "Um elemento essencial para sua aventura").
+- **Parâmetros:** O comando deve ser estruturado para aceitar variáveis dinâmicas, como características do produto, público-alvo e resposta emocional.
+- **Conclusão:** Salvar o comando como "Modelo de gerador de slogans da Cymbal".
+
+### Tarefas 3 e 4: Integração, Teste e Modificação de Código (Python)
+A etapa final tira os comandos da interface visual do Vertex AI Studio e os leva para um ambiente de desenvolvimento real usando Jupyter Notebooks no Vertex AI Workbench.
+
+- O usuário deve exportar o código Python de ambos os comandos criados (Imagens e Slogans), colá-los nos notebooks correspondentes (image-analysis.ipynb e tagline-generator.ipynb), ajustar a autenticação para usar o ID do Projeto e resolver dois desafios de modificação de código:
+- **Modificação no Código de Imagem (Tarefa 3):**
+  - Alterar o texto do prompt no código para exigir que a resposta tenha menos de 10 palavras.
+  - Alterar um parâmetro no código (a Temperatura) para forçar o modelo a ser o mais criativo e inesperado possível.
+- **Modificação no Código de Slogans (Tarefa 4):**
+- Alterar a string de entrada final no código Python para ordenar explicitamente que o modelo inclua a palavra-chave "nature" no slogan gerado.
+
+
