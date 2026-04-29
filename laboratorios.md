@@ -120,6 +120,6 @@ A etapa final tira os comandos da interface visual do Vertex AI Studio e os leva
   - Alterar o texto do prompt no código para exigir que a resposta tenha menos de 10 palavras.
   - Alterar um parâmetro no código (a Temperatura) para forçar o modelo a ser o mais criativo e inesperado possível.
 - **Modificação no Código de Slogans (Tarefa 4):**
-- Alterar a string de entrada final no código Python para ordenar explicitamente que o modelo inclua a palavra-chave "nature" no slogan gerado.
+  - Alterar a string de entrada final no código Python para ordenar explicitamente que o modelo inclua a palavra-chave "nature" no slogan gerado.
 
 
